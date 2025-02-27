@@ -3,7 +3,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: "Method not allowed" });
     }
     try {
-        const API_URL = `${process.env.API_BASE_URL}/api/investment/list-earnings`;
+        const API_URL = `http://13.203.104.224/api/investment/list-earnings`;
         const accessToken = req.headers.authorization?.split(" ")[1];
         if (!accessToken) {
             return res.status(401).json({ message: "Unauthorized: Access token is missing" });
