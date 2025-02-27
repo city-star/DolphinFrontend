@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Link from 'next/link';
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router"; 
+import { getAuthToken } from '@/utils/auth'; 
+
 
 function Register() {
+    
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +16,15 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const router = useRouter(); 
+    
+    useEffect(() => {
+        if (getAuthToken()) {
+            router.push("/Dashboard"); 
+        }
+    }, []);
+
+// _________________ HANDLE REGISTER_____________________>
 
     const handleSubmit = async (e) => {
         e.preventDefault();

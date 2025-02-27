@@ -1,11 +1,56 @@
 import React from 'react';
 import { MdSearch } from "react-icons/md";
 import { Line } from 'react-chartjs-2';
+import { useState,useEffect } from 'react';
+import { getAuthToken } from '@/utils/auth'; 
+
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Earnings() {
+
+
+    const [earnings, setEarnings] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+   
+    useEffect(() => {
+        const fetchEarnings = async () => {
+            const token = getAuthToken();
+            if (!token) {
+                setError("Authentication error. Please log in again.");
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/earnings', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+
+                });
+
+                console.log("Reasponse form the earnings---->",response);
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch earnings.");
+                }
+
+                const data = await response.json();
+                setEarnings(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEarnings();
+    }, []);
     // Sample data for the earnings chart
     const earningsData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -84,46 +129,42 @@ function Earnings() {
                         </div>
                     </div>
 
+                 
                     {/* Earnings Table */}
                     <section className="mt-6 bg-gray-900 p-4 rounded-lg shadow-lg">
                         <h2 className="text-lg font-semibold mb-4">Earnings Breakdown</h2>
                         <div className="overflow-x-auto">
-                            <table className="w-full bg-black text-white text-sm rounded-lg">
-                                <thead>
-                                    <tr className="bg-blue-800 text-left">
-                                        <th className="px-6 py-3">Date</th>
-                                        <th className="px-6 py-3">Investment Type</th>
-                                        <th className="px-6 py-3">Earnings</th>
-                                        <th className="px-6 py-3">Source</th>
-                                        <th className="px-6 py-3">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="border-b border-gray-700">
-                                        <td className="px-6 py-3">Jan 28, 2025</td>
-                                        <td className="px-6 py-3">Crypto</td>
-                                        <td className="px-6 py-3">$500</td>
-                                        <td className="px-6 py-3">Capital Gains</td>
-                                        <td className="px-6 py-3 text-green-400">Received</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-700">
-                                        <td className="px-6 py-3">Jan 25, 2025</td>
-                                        <td className="px-6 py-3">Stocks</td>
-                                        <td className="px-6 py-3">$320</td>
-                                        <td className="px-6 py-3">Dividends</td>
-                                        <td className="px-6 py-3 text-yellow-400">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-3">Jan 20, 2025</td>
-                                        <td className="px-6 py-3">Real Estate</td>
-                                        <td className="px-6 py-3">$1,200</td>
-                                        <td className="px-6 py-3">Rental Income</td>
-                                        <td className="px-6 py-3 text-green-400">Received</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {loading ? (
+                                <p className="text-center text-gray-300">Loading earnings...</p>
+                            ) : error ? (
+                                <p className="text-center text-red-500">{error}</p>
+                            ) : (
+                                <table className="w-full bg-black text-white text-sm rounded-lg">
+                                    <thead>
+                                        <tr className="bg-blue-800 text-left">
+                                            <th className="px-6 py-3">Date</th>
+                                            <th className="px-6 py-3">Investment ID</th>
+                                            <th className="px-6 py-3">Earnings</th>
+                                            <th className="px-6 py-3">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {earnings.map((earning) => (
+                                            <tr key={earning.id} className="border-b border-gray-700">
+                                                <td className="px-6 py-3">{new Date(earning.created_at).toLocaleDateString()}</td>
+                                                <td className="px-6 py-3">{earning.investment_id}</td>
+                                                <td className="px-6 py-3">${earning.amount.toFixed(2)}</td>
+                                                <td className={`px-6 py-3 ${earning.is_withdrawn ? "text-green-400" : "text-yellow-400"}`}>
+                                                    {earning.is_withdrawn ? "Withdrawn" : "Pending"}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
                         </div>
                     </section>
+
                 </main>
             </div>
         </div>
