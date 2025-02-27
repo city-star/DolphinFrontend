@@ -25,7 +25,7 @@ function Investment() {
         }
 
         try {
-            const response = await fetch('/api/Investment/investments', {
+            const response = await fetch('/api/investment/investments', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

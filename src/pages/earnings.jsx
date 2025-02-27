@@ -25,7 +25,7 @@ function Earnings() {
             }
 
             try {
-                const response = await fetch('/api/earnings', {
+                const response = await fetch('/api/investment/list-earnings', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
