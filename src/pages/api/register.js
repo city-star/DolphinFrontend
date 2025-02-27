@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
         const userData = { name, email, password };
         
-        const API_URL = `${process.env.API_BASE_URL}/api/auth/register`;
+        const API_URL = `http://13.203.104.224/api/auth/register`;
         
         const response = await fetch(API_URL, {
             method: "POST",

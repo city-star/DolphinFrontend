@@ -10,7 +10,7 @@ export default async function handler(req, res) {
             return res.status(400).json({ message: "Email or password is missing" });
         }
 
-        const API_URL = `${process.env.API_BASE_URL}/api/auth/login`;
+        const API_URL = `http://13.203.104.224/api/auth/login`;
         console.log("API URL ---->", API_URL);
 
         
