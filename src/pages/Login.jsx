@@ -24,12 +24,13 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const userData = { username, password };
+        const userData = { "username":username, "password":password };
+        const formBody = new URLSearchParams(userData).toString();
         try {
             const response = await fetch('http://13.203.104.224/api/auth/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formBody,
             });
 
             const data = await response.json();
