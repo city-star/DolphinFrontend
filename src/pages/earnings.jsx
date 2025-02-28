@@ -25,7 +25,7 @@ function Earnings() {
             }
 
             try {
-                const response = await fetch('/api/investment/list-earnings', {
+                const response = await fetch('http://13.203.104.224/api/investment/list-earnings', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

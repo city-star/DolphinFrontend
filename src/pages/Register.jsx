@@ -37,7 +37,7 @@ function Register() {
         const userData = { name, email, password };
 
         try {
-            const response = await fetch('/api/auth/register', {
+            const response = await fetch('http://13.203.104.224/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),

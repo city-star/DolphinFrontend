@@ -25,7 +25,7 @@ function Investment() {
         }
 
         try {
-            const response = await fetch('/api/investment/investments', {
+            const response = await fetch('http://13.203.104.224/api/investment/investments', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function Investment() {
         };
 
         try {
-            const response = await fetch('/api/Investment/invest', {
+            const response = await fetch('http://13.203.104.224/api/Investment/invest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

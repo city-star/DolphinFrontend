@@ -26,7 +26,7 @@ function Login() {
 
         const userData = { username, password };
         try {
-            const response = await fetch('/api/auth/login', {
+            const response = await fetch('http://13.203.104.224/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),
