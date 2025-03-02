@@ -14,5 +14,6 @@ export const setAuthToken = (token) => {
 export const removeAuthToken = () => {
     if (typeof window !== "undefined") {
         localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
     }
 };

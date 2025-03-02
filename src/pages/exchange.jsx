@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Sidebar from '@/Components/sidebar';
 import Header from '@/Components/header';
+import withAuth from '@/hoc/withAuth';
 
 function Exchange() {
     const router = useRouter();
@@ -95,4 +96,4 @@ function Exchange() {
     );
 }
 
-export default Exchange;
+export default withAuth(Exchange);

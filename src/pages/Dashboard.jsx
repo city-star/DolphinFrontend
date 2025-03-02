@@ -6,11 +6,12 @@ import { MdAccountBalanceWallet, MdAttachMoney, MdTrendingUp } from "react-icons
 import Link from 'next/link';
 import Header from "@/Components/header";
 import Sidebar from "@/Components/sidebar";
+import withAuth from "@/hoc/withAuth";
 
 // Initialize Chart.js components
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 
-export default function Dashboard() {
+ function Dashboard() {
   // Dummy data for the graph
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -95,3 +96,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withAuth(Dashboard)
