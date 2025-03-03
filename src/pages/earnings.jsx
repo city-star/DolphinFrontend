@@ -87,18 +87,18 @@ function Earnings() {
   return (
     <div className="flex min-h-screen bg-black text-white">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar title="Earnings" />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ">
+      <div className="w-full flex flex-col lg:ml-64 ">
         {/* Navbar */}
         <Header />
 
         {/* Earnings Overview & Chart */}
         <main className="p-6 mt-16">
-          <div className="flex space-x-6">
+          <div className="flex flex-col md:flex-row gap-6">
             {/* Earnings Overview */}
-            <div className="w-1/2 bg-gray-900 p-6 rounded-lg shadow-lg">
+            <div className="md:w-1/2 bg-gray-900 p-6 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold mb-4">Earnings Overview</h2>
               <div className="space-y-4">
                 <div className="bg-black p-4 rounded-lg flex justify-between items-center border border-blue-800">
@@ -117,7 +117,7 @@ function Earnings() {
             </div>
 
             {/* Earnings Chart */}
-            <div className="w-1/2 bg-gray-900 p-6 rounded-lg shadow-lg">
+            <div className="md:w-1/2 bg-gray-900 p-6 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold mb-4">Earnings Trend</h2>
               <Line data={earningsData} />
             </div>

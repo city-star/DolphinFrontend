@@ -97,16 +97,16 @@ function Investment() {
   };
 
   return (
-    <div className="flex min-h-screen bg-black text-white text-base">
+    <div className="flex min-h-screen px-6 bg-black text-white text-base">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar title="Investment" />
 
-      <div className="flex-1 flex flex-col">
+      <div className="w-full flex flex-col lg:ml-64">
         {/* Navbar */}
         <Header />
 
         {/* Main Content */}
-        <main className="flex-1 p-5 mt-12">
+        <main className=" mt-12">
           <ToastContainer />
 
           {/* Investment Overview Section */}

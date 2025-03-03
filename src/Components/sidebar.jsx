@@ -1,31 +1,66 @@
-import React from 'react';
-import { FaTachometerAlt, FaChartLine, FaWallet, FaExchangeAlt } from 'react-icons/fa';
+"use client";
+import { useSidebar } from "@/Context/SidebarContext";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import React from "react";
+import {
+  FaTachometerAlt,
+  FaChartLine,
+  FaWallet,
+  FaExchangeAlt,
+} from "react-icons/fa";
 
 function Sidebar() {
+  const { isSidebarOpen } = useSidebar();
+  const pathname = usePathname(); // ✅ Get Current Route
+
+  // ✅ Define Links
+  const navLinks = [
+    {
+      href: "/Dashboard",
+      label: "Dashboard",
+      icon: <FaTachometerAlt className="text-xl" />,
+    },
+    {
+      href: "/investment",
+      label: "Investments",
+      icon: <FaChartLine className="text-xl" />,
+    },
+    {
+      href: "/earnings",
+      label: "Earnings",
+      icon: <FaWallet className="text-xl" />,
+    },
+    {
+      href: "/exchange",
+      label: "Exchanges",
+      icon: <FaExchangeAlt className="text-xl" />,
+    },
+  ];
+
   return (
-    <aside className="w-64 h-screen bg-cover bg-center text-white p-6 flex flex-col items-center shadow-lg relative after:content-[''] after:absolute after:inset-0 after:bg-black/60 after:rounded-lg">
-      
-      {/* Sidebar Title bg-[url('/Assets/sidebar.jpeg')] */}
-      <h1 className="text-2xl font-bold mb-8 mt-24 text-center relative z-10">Dashboard</h1>
+    <aside
+      className={`w-64 fixed top-0 left-0 bg-black z-50 transition-all duration-500 ease-in-out h-screen text-white p-6 flex flex-col items-center shadow-lg lg:translate-x-0 ${
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      {/* Sidebar Title */}
+      <h1 className="text-2xl font-bold mb-8  text-center">Dashboard</h1>
 
       {/* Navigation Links */}
-      <nav className="space-y-4 w-full text-center relative z-10">
-        <a href="/Dashboard" className="flex items-center space-x-3 hover:bg-blue-700  px-4 py-3 rounded transition duration-300">
-          <FaTachometerAlt className="text-xl" />
-          <span>Dashboard</span>
-        </a>
-        <a href="/investment" className="flex items-center space-x-3 hover:bg-blue-700  px-4 py-3 rounded transition duration-300">
-          <FaChartLine className="text-xl" />
-          <span>Investments</span>
-        </a>
-        <a href="/earnings" className="flex items-center space-x-3 hover:bg-blue-700  px-4 py-3 rounded transition duration-300">
-          <FaWallet className="text-xl" />
-          <span>Earnings</span>
-        </a>
-        <a href="/exchange" className="flex items-center space-x-3 hover:bg-blue-700 px-4 py-3 rounded transition duration-300">
-          <FaExchangeAlt className="text-xl" />
-          <span>Exchanges</span>
-        </a>
+      <nav className="space-y-4 w-full">
+        {navLinks.map(({ href, label, icon }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`flex items-center space-x-3 px-4 py-3 rounded transition duration-300 ${
+              pathname === href ? "bg-blue-700" : "hover:bg-gray-700"
+            }`}
+          >
+            {icon}
+            <span>{label}</span>
+          </Link>
+        ))}
       </nav>
     </aside>
   );

@@ -2,19 +2,27 @@ import { removeAuthToken } from "@/utils/auth";
 import { useRouter } from "next/router";
 import React from "react";
 import { MdLogout, MdSearch } from "react-icons/md";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useSidebar } from "@/Context/SidebarContext";
 
 function Header() {
   const router = useRouter();
 
+  const { toggleSidebar } = useSidebar();
+  console.log({ toggleSidebar });
   const handleLogout = () => {
     console.log("handle logout");
     removeAuthToken();
     router.push("/Login");
   };
   return (
-    <header className="bg-black w-[calc(100%-256px)]  shadow py-3 px-6 flex justify-between items-center fixed   z-10">
+    <header className="bg-black w-full left-0 lg:left-[256px] lg:w-[calc(100%-256px)]  shadow py-3 px-3 lg:px-6 flex justify-between items-center fixed   z-10">
+      <button onClick={toggleSidebar} className="  lg:!hidden">
+        <GiHamburgerMenu />
+      </button>
+
       {/* Search Bar */}
-      <div className="relative w-80">
+      <div className="relative  w-40 lg:w-80">
         <MdSearch
           size={18}
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300"
