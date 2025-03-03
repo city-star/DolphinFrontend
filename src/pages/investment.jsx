@@ -5,6 +5,7 @@ import { getAuthToken } from "@/utils/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import withAuth from "@/hoc/withAuth";
+import { api } from "../../utils/apiHandlers";
 
 function Investment() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,21 +26,20 @@ function Investment() {
     }
 
     try {
-      const response = await fetch(
-        "http://13.203.104.224/api/investment/investments",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.get(`investment/investments`);
+      //  await fetch(
+      //   "http://13.203.104.224/api/investment/investments",
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to fetch investments");
-      }
+      const data = await response.data;
+      console.log({ data });
       setInvestments(data);
     } catch (error) {
       console.error("Error fetching investments:", error);
@@ -65,23 +65,21 @@ function Investment() {
     };
 
     try {
-      const response = await fetch(
-        "http://13.203.104.224/api/investment/invest",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(investmentData),
-        }
-      );
+      const response = await api.post("investment/invest", investmentData);
+      //  await fetch(
+      //   "http://13.203.104.224/api/investment/invest",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     body: JSON.stringify(investmentData),
+      //   }
+      // );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Investment failed");
-      }
+      const data = await response.data;
+      console.log({ data });
 
       toast.success("Investment Successful", {
         position: "top-right",

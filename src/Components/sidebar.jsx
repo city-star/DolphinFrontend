@@ -45,7 +45,7 @@ function Sidebar() {
       }`}
     >
       {/* Sidebar Title */}
-      <h1 className="text-2xl font-bold mb-8  text-center">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-8 text-center">Dashboard</h1>
 
       {/* Navigation Links */}
       <nav className="space-y-4 w-full">

@@ -13,7 +13,6 @@ import {
   MdAttachMoney,
   MdTrendingUp,
 } from "react-icons/md";
-import Link from "next/link";
 import Header from "@/Components/header";
 import Sidebar from "@/Components/sidebar";
 import withAuth from "@/hoc/withAuth";

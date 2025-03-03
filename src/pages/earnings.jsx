@@ -17,6 +17,7 @@ import {
   Legend,
 } from "chart.js";
 import withAuth from "@/hoc/withAuth";
+import { api } from "../../utils/apiHandlers";
 
 ChartJS.register(
   CategoryScale,
@@ -42,27 +43,16 @@ function Earnings() {
       }
 
       try {
-        const response = await fetch(
-          "http://13.203.104.224/api/investment/list-earnings",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await api.get(`/investment/list-earnings`);
 
         console.log("Reasponse form the earnings---->", response);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch earnings.");
-        }
-
-        const data = await response.json();
+        const data = await response.data;
+        console.log({ data });
         setEarnings(data);
       } catch (err) {
         setError(err.message);
+        console.log(err);
       } finally {
         setLoading(false);
       }
